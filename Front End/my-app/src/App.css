@@ -1,0 +1,7 @@
+body {
+  background-image: url('./images/background.svg'); /*Web Page background*/
+  background-size: cover; 
+  background-position: center; 
+  background-attachment: fixed; 
+}
+
