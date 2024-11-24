@@ -73,13 +73,21 @@ function Account() {
 				<h2>Sign Up</h2>
 				<form className="account-form" onSubmit={handleSignupSubmit}>
 					<div className="form-group">
-						<label htmlFor="name">Full Name</label>
+						<label htmlFor="name">First Name</label>
 						<input
 							type="text"
-							id="name"
-							placeholder="Enter your full name"
+							id="firstname"
+							placeholder="Enter your first name"
 							required
 						/>
+						<label htmlFor="name">Last Name</label>
+						<input
+							type="text"
+							id="lastname"
+							placeholder="Enter your Last name"
+							required
+						/>
+						
 						<label htmlFor="email">Email</label>
 						<input
 							type="email"
