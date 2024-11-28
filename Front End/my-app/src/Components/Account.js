@@ -8,12 +8,20 @@ function Account() {
 	// signup button handler
 	const handleSignupSubmit = (e) => {
 		//Creating an object to get data from JSX
+
 		const SignupData = {
 			username: e.target.username.value,
 			email: e.target.email.value,
 			password: e.target.password.value,
 			confirmPassword: e.target.confirmPassword.value,
 		};
+
+		if (SignupData.password !== SignupData.confirmPassword) {
+			console.error("Passwords do not match!");
+			alert("Passwords do not match. Please try again."); 
+			return; // Stop form submission
+		}
+
 
 		fetch("", {
 			method: "POST",
@@ -53,7 +61,7 @@ function Account() {
 					alert("Login Successfull!");
 				} else {
 					console.log("Login Unsuccesfull");
-					alert("Login Successfull!");
+					alert("Invalid username or password!");
 				}
 			})
 			.catch((error) => console.log("Error"));
