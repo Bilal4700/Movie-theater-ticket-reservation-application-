@@ -6,31 +6,66 @@ function Account() {
 	const [isLoginPopupVisible, setIsLoginPopupVisible] = useState(false);
 
 	// signup button handler
-	const handleSignupSubmit = () => {
-		alert("Account created successfully!");
-	};
+	const handleSignupSubmit = (e) => {
+		//Creating an object to get data from JSX
+		const SignupData = {
+			username: e.target.username.value,
+			email: e.target.email.value,
+			password: e.target.password.value,
+			confirmPassword: e.target.confirmPassword.value,
+		};
 
-	// login button handeler 
-	const handleLoginSubmit = () => {
-		alert("Login successful!");
-		closeLoginPopup(); // Close popup after successful login
+		fetch("", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(SignupData),
+		})
+			.then((res) => {
+				if (res.ok) {
+					console.log("Signup Succesfull");
+					alert("Signup Successfull!");
+				} else {
+					console.log("Signup Unsuccesfull");
+					alert("Signup Unsuccessfull!");
+				}
+			})
+			.catch((error) => console.log("Error"));
+	};
+	// login button handeler
+	const handleLoginSubmit = (e) => {
+		const loginData = {
+			email: e.target.loginEmail.value,
+			password: e.target.loginPassword.value,
+		};
+
+		fetch("", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(loginData),
+		})
+			.then((res) => {
+				if (res.ok) {
+					console.log("Login Succesfull");
+					alert("Login Successfull!");
+				} else {
+					console.log("Login Unsuccesfull");
+					alert("Login Successfull!");
+				}
+			})
+			.catch((error) => console.log("Error"));
 	};
 
 	// Handlers for managing login popup visibility
 	const openLoginPopup = () => setIsLoginPopupVisible(true);
 	const closeLoginPopup = () => setIsLoginPopupVisible(false);
 
+	// JSX For login and Signup Starts here
 
-
-
-
-
-
-
-
-
-	// JSX For login and Signup
-	// function for LoginPop up 
+	// function for LoginPop up
 	const renderLoginPopup = () => {
 		if (!isLoginPopupVisible) return null;
 
@@ -40,17 +75,17 @@ function Account() {
 					<h2>Login</h2>
 					<form onSubmit={handleLoginSubmit}>
 						<div className="form-group">
-							<label htmlFor="login-email">Email</label>
+							<label htmlFor="loginEmail">Email</label>
 							<input
 								type="email"
-								id="login-email"
+								id="loginEmail"
 								placeholder="Enter your email"
 								required
 							/>
-							<label htmlFor="login-password">Password</label>
+							<label htmlFor="loginPassword">Password</label>
 							<input
 								type="password"
-								id="login-password"
+								id="loginPassword"
 								placeholder="Enter your password"
 								required
 							/>
@@ -73,21 +108,13 @@ function Account() {
 				<h2>Sign Up</h2>
 				<form className="account-form" onSubmit={handleSignupSubmit}>
 					<div className="form-group">
-						<label htmlFor="name">First Name</label>
+						<label htmlFor="username">User Name</label>
 						<input
 							type="text"
-							id="firstname"
-							placeholder="Enter your first name"
+							id="username"
+							placeholder="Enter your User Name"
 							required
 						/>
-						<label htmlFor="name">Last Name</label>
-						<input
-							type="text"
-							id="lastname"
-							placeholder="Enter your Last name"
-							required
-						/>
-						
 						<label htmlFor="email">Email</label>
 						<input
 							type="email"
@@ -95,11 +122,20 @@ function Account() {
 							placeholder="Enter your email"
 							required
 						/>
+
 						<label htmlFor="password">Password</label>
 						<input
 							type="password"
 							id="password"
 							placeholder="Enter your password"
+							required
+						/>
+
+						<label htmlFor="confirmPassword">Password</label>
+						<input
+							type="password"
+							id="confirmPassword"
+							placeholder="Confirm Password"
 							required
 						/>
 					</div>
@@ -108,8 +144,7 @@ function Account() {
 					</button>
 				</form>
 				<p className="login-link">
-					Already have an account?{" "}
-					<span onClick={openLoginPopup}>Login</span>
+					Already have an account? <span onClick={openLoginPopup}>Login</span>
 				</p>
 			</div>
 
