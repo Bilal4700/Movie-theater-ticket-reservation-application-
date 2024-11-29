@@ -9,17 +9,18 @@ function Account() {
 	const handleSignupSubmit = (e) => {
 		//Creating an object to get data from JSX
 
+		e.preventDefault();
 		const SignupData = {
 			username: e.target.username.value,
 			email: e.target.email.value,
 			password: e.target.password.value,
-			confirmPassword: e.target.confirmPassword.value,
-		};
 
-		if (SignupData.password !== SignupData.confirmPassword) {
+		};
+		const confirmPassword = e.target.confirmPassword.value;
+		if (SignupData.password !== confirmPassword) {
 			console.error("Passwords do not match!");
 			alert("Passwords do not match. Please try again."); 
-			return; // Stop form submission
+			return; 
 		}
 
 
