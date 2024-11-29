@@ -44,6 +44,7 @@ function Account() {
 	};
 	// login button handeler
 	const handleLoginSubmit = (e) => {
+		e.preventDefault();
 		const loginData = {
 			email: e.target.loginEmail.value,
 			password: e.target.loginPassword.value,
@@ -59,7 +60,6 @@ function Account() {
 			.then((res) => {
 				if (res.ok) {
 					console.log("Login Succesfull");
-					alert("Login Successfull!");
 					localStorage.setItem("userEmail" , loginData.email);
 					window.location.href = "/user-dashboard";
 				} else {
