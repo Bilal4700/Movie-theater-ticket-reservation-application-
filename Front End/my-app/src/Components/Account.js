@@ -49,7 +49,7 @@ function Account() {
 			password: e.target.loginPassword.value,
 		};
 
-		fetch("", {
+		fetch("http://localhost:8080/logged", {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
@@ -60,6 +60,8 @@ function Account() {
 				if (res.ok) {
 					console.log("Login Succesfull");
 					alert("Login Successfull!");
+					localStorage.setItem("userEmail" , loginData.email);
+					window.location.href = "/user-dashboard";
 				} else {
 					console.log("Login Unsuccesfull");
 					alert("Invalid username or password!");

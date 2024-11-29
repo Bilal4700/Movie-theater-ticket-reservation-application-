@@ -28,4 +28,10 @@ public class UserService {
     	return "Account Created Successfully";
     }
     
+    public boolean verifyLogin(User user) {
+    	if(userRepository.findByEmail(user.getEmail()) != null && userRepository.findByPassword(user.getpassword()) != null) {
+    		return true;
+    	}
+    	return false;
+    }
 }

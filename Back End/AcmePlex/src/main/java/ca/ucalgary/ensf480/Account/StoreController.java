@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
+
 public class StoreController {
 
 	@Autowired
@@ -26,4 +27,20 @@ public class StoreController {
 
         return ResponseEntity.status(HttpStatus.CREATED).body(result);
     }
-}
+    
+    @PostMapping("/logged")
+    public ResponseEntity<String> login(@RequestBody User user) {
+        // Validate the credentials
+    
+    		boolean Verified = userService.verifyLogin(user);
+    		if(Verified) {    			
+    			return ResponseEntity.status(HttpStatus.OK).body("Login Successful!");
+    		}else {
+    			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid email or password!");
+    		}
+  
+           
+        }
+    }
+
+
