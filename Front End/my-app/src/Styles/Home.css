@@ -1,20 +1,4 @@
 .Home {
-	padding: 20px;
-	text-align: center;
-	margin: 80px;
-	padding: 10px;
-	color: white;
+    text-align: center;
+    color: white;
 }
-
-.Home h2 {
-	font-size: 3em;
-	margin-bottom: 20px;
-}
-
-.Home p {
-	font-size: 2em;
-	margin-bottom: 20px;
-}
-
-
-  

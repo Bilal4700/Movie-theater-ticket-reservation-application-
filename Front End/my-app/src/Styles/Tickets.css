@@ -1,17 +1,25 @@
-.Tickets {
-	padding: 20px;
-	text-align: center;
-	margin: 80px;
-	padding: 10px;
-	color: white;
-}
-
-.Tickets h2 {
-	font-size: 3em;
-	margin-bottom: 20px;
-}
-
 .Tickets p {
-	font-size: 2em;
-	margin-bottom: 20px;
+    font-size: 2em;
+    margin-bottom: 20px;
 }
+.Search-Bar-Container {
+    text-align: right; 
+    margin: 20px;
+  }
+  
+.Search-Bar-Heading {
+    display: inline-block;
+    font-size: 24px;
+    color: white; 
+    margin: 0;
+  }
+  
+.Search-Input {
+    margin-left: 10px; 
+    width: 250px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background-color: #333; 
+    color: white; 
+  }
