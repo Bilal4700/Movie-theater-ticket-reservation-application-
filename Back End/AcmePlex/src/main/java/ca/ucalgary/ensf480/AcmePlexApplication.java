@@ -8,7 +8,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
 @EntityScan(basePackages = {"ca.ucalgary.ensf480.Account"})
-@EnableJpaRepositories(basePackages = "ca.ucalgary.ensf480.Account")
 public class AcmePlexApplication {
 
 	public static void main(String[] args) {

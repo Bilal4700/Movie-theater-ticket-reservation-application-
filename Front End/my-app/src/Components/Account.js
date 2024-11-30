@@ -10,12 +10,16 @@ function Account() {
 		//Creating an object to get data from JSX
 
 		e.preventDefault();
+		const formData = new FormData(e.target);
 		const SignupData = {
-			username: e.target.username.value,
-			email: e.target.email.value,
-			password: e.target.password.value,
-
-		};
+			username: formData.get("username"), // Use the 'name' attributes to fetch values
+			email: formData.get("email"),
+			password: formData.get("password"),
+			ccn: formData.get("ccn"),
+			exp: formData.get("exp"),
+			cvv: formData.get("cvv"),
+		  };
+		console.log(SignupData);
 		const confirmPassword = e.target.confirmPassword.value;
 		if (SignupData.password !== confirmPassword) {
 			console.error("Passwords do not match!");
@@ -123,6 +127,7 @@ function Account() {
 						<input
 							type="text"
 							id="username"
+							name="username"
 							placeholder="Enter your User Name"
 							required
 						/>
@@ -130,6 +135,7 @@ function Account() {
 						<input
 							type="email"
 							id="email"
+							name="email"
 							placeholder="Enter your email"
 							required
 						/>
@@ -138,6 +144,7 @@ function Account() {
 						<input
 							type="password"
 							id="password"
+							name="password"
 							placeholder="Enter your password"
 							required
 						/>
@@ -146,9 +153,47 @@ function Account() {
 						<input
 							type="password"
 							id="confirmPassword"
+							name="confirmPassword"
 							placeholder="Confirm Password"
 							required
 						/>
+						<label htmlFor="cnn">Credit Card Number</label>
+						<input
+							type="tel"
+							id="ccn"
+							name="ccn"
+							placeholder="xxxx xxxx xxxx xxxx"
+							inputMode="numeric" 
+							pattern="[0-9\s]{16}" 
+							maxLength="19" 
+							required
+						/>
+						<div className="payment-fields">
+						<label htmlFor="exp">Exp</label>
+						<input
+							type="tel"
+							id="exp"
+							name="exp"
+							placeholder="MM/YY"
+							inputMode="numeric" 
+							pattern="(0[1-9]|1[0-2])\/\d{2}" 
+							maxLength="5" 
+							required
+						/>
+
+						<label htmlFor="cvv">CVV</label>
+							<input
+							type="tel"
+							id="cvv"
+							name="cvv"
+							placeholder="xxx"
+							inputMode="numeric"
+							pattern="\d{3}"
+							maxLength="3"
+							required
+							/>
+						</div>
+			
 					</div>
 					<button type="submit" className="submit-button">
 						Sign Up

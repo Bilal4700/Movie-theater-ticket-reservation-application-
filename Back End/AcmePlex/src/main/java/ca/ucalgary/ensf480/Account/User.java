@@ -18,14 +18,26 @@ public class User {
 
     @Column(name = "Password") 
     private String password;
-
+    
+    @Column(name = "CCN")
+    private String ccn;
+    
+    @Column(name = "CVV")
+    private String cvv;
+    
+    @Column(name = "EXP")
+    private String exp;
+    
     public User() {
     }
 
-    public User(String username, String email, String password) {
+    public User(String username, String email, String password, String ccn, String cvv, String exp) {
         this.username = username;
         this.email = email;
         this.password = password;
+        this.ccn = ccn;
+        this.cvv = cvv;
+        this.exp = exp;
     }
 
     public String getUsername() {
@@ -50,5 +62,29 @@ public class User {
 
     public void setpassword(String password) {
         this.password = password;
+    }
+    
+    public String getCCN() {
+    	return ccn;
+    }
+    
+    public void setCCN(String ccn) {
+    	this.ccn =ccn;
+    }
+    
+    public String getCVV() {
+    	return cvv;
+    }
+    
+    public void setCVV(String cvv) {
+    	this.cvv = cvv;
+    }
+    
+    public String getEXP() {
+    	return exp;
+    }
+    
+    public void setEXP(String exp) {
+    	this.exp = exp;
     }
 }
