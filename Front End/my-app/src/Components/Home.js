@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import "../Styles/Home.css";
 
 import AnyoneButYou from "../movies_img/AnyoneButYou.jpg";
@@ -27,6 +28,8 @@ const imageMap = {
 
 function Home() {
   const [movies, setMovies] = useState([]);
+  const navigate = useNavigate();
+  const available_movies = ["FightClub", "Inception", "Shooter"];
 
   const fetchMovies = () => {
     fetch("http://localhost:8080/Movies")
@@ -34,6 +37,15 @@ function Home() {
       .then((data) => setMovies(data))
       .catch((error) => console.log("Error fetching movies:", error));
   };
+
+  const HandleClick = (movieTitle) => {
+	if (available_movies.includes(movieTitle)) {
+	  navigate(`/Tickets/${movieTitle}`); // Navigate to the booking page
+	} else {
+	  navigate(`/ComingSoon/${movieTitle}`); // Navigate to the "Coming Soon" page
+	}
+  };
+  
 
   useEffect(() => {
     fetchMovies();
@@ -50,7 +62,7 @@ function Home() {
               className="movie-image"
             />
             <h2 className="movie-title">{movie.title || "Loading..."}</h2>
-            <button className="book-ticket-button">Book Ticket</button>
+            <button className="book-ticket-button" onClick={() => HandleClick(movie.title)} >Book Ticket</button>
           </div>
         ))}
       </div>
