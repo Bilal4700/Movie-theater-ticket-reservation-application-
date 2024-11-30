@@ -57,8 +57,8 @@ function Home() {
         {movies.map((movie, index) => (
           <div key={index} className="movie-card">
             <img
-              src={imageMap[movie.title] || "placeholder.jpg"}
-              alt={movie.title || "Movie Poster"}
+              src={imageMap[movie.title] }
+              alt={movie.title}
               className="movie-image"
             />
             <h2 className="movie-title">{movie.title || "Loading..."}</h2>

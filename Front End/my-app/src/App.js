@@ -43,6 +43,7 @@ function App() {
 			path: "/Tickets/:movie",
 			element: (
 				<>
+					<Header />
 					<Booking />
 				</>
 			),
@@ -51,6 +52,7 @@ function App() {
 			path: "/ComingSoon/:movie",
 			element: (
 				<>
+					<Header />
 					<UpcomingMovies />
 				</>
 			),

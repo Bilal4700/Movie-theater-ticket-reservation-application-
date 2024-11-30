@@ -1,6 +1,15 @@
 import React from "react";
 import "../Styles/Tickets.css";
 
+import FightClub from "../movies_img/FightClub.jpg";
+import Inception from "../movies_img/Inception.jpg";
+import Venom from "../movies_img/Venom.jpg";
+
+const imageMap = {
+  FightClub: FightClub,
+  Inception: Inception,
+  Venom: Venom,
+}
 
 function Tickets() {
     return (
