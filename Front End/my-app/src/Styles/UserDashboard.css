@@ -1,0 +1,47 @@
+
+.user-dashboard {
+    max-width: 500px;
+    margin: 50px auto;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.1); 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+    color: white;
+    text-align: center;
+  }
+  
+
+  .dashboard-header h2 {
+    font-size: 26px;
+    color: #f1c40f; 
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+  }
+  
+
+  .dashboard-content p {
+    font-size: 18px;
+    margin: 10px 0;
+    line-height: 1.6;
+  }
+  
+  .dashboard-content strong {
+    color: #f39c12; 
+  }
+  
+
+  .loading-message {
+    font-size: 18px;
+    color: #bbb;
+    text-align: center;
+    margin-top: 50px;
+    animation: fade 1.5s infinite;
+  }
+
+  
+  @keyframes fade {
+    0% { opacity: 0.2; }
+    50% { opacity: 1; }
+    100% { opacity: 0.2; }
+  }
+  
