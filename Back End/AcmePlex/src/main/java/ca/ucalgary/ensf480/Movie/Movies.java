@@ -23,7 +23,7 @@ public class Movies {
     
     public Movies() {}
 
-    public Movies(String title, String date, String time) {
+    public Movies(String title, String date, String time ,String path) {
         this.title = title;
         this.date = date;
         this.time = time;
