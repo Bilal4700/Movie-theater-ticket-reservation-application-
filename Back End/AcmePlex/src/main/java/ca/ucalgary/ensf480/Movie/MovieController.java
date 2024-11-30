@@ -23,5 +23,11 @@ public class MovieController {
     public Iterable<Movies> getAllMovies() {
         return movieServices.getAllMovies();
     }
+    
+    // Get a movie by title
+    @GetMapping("/{title}")
+    public Movies searchMovie(@PathVariable String title) {
+        return movieServices.getMovieByTitle(title);
+    }
         
 }
