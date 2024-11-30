@@ -1,4 +1,5 @@
 import { useParams } from "react-router-dom";
+import "../Styles/UpcomingMovies.css"
 
 function UpcomingMovies() {
   const { movie } = useParams();
