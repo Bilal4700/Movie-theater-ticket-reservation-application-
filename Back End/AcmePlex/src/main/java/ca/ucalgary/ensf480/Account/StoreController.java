@@ -18,25 +18,24 @@ public class StoreController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<String> signup(@RequestBody User user) {
+    public String signup(@RequestBody User user) {
         String result = userService.registeredUsers(user);
 
         if ("Username already exists".equals(result) || "Email already exists".equals(result)) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(result);
+            return result;
         }
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(result);
+        return "Account Created Successfully";
     }
     
     @PostMapping("/logged")
-    public ResponseEntity<String> login(@RequestBody User user) {
+    public String login(@RequestBody User user) {
         // Validate the credentials
-    
     		boolean Verified = userService.verifyLogin(user);
     		if(Verified) {    			
-    			return ResponseEntity.status(HttpStatus.OK).body("Login Successful!");
+    			return "Login Successful!";
     		}else {
-    			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid email or password!");
+    			return"Invalid email or password!";
     		}
   
            
