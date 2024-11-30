@@ -1,5 +1,7 @@
 package ca.ucalgary.ensf480.Movie;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,4 +23,7 @@ public class MovieServices {
     public Movies getMovieByTitle(String title) {
         return movieRepository.findByTitle(title);
     }
+    
+    
+    
 }

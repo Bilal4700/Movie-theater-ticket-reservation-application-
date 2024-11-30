@@ -29,5 +29,9 @@ public class MovieController {
     public Movies searchMovie(@PathVariable String title) {
         return movieServices.getMovieByTitle(title);
     }
+    
+    
+
+    
         
 }
