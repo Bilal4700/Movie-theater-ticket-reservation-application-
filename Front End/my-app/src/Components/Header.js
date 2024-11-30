@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import logo from "../images/Logo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTicket, faUser, faHome, faSignOut } from "@fortawesome/free-solid-svg-icons";
+import { faTicket, faUser, faHome, faSignOut} from "@fortawesome/free-solid-svg-icons";
 
 
 export default function Header() {
@@ -42,7 +42,12 @@ export default function Header() {
                         <FontAwesomeIcon icon={faTicket} style={{ marginRight: "8px" }} /> Tickets
                     </NavLink>
 					{isLoggedIn? (
+						<>
+						<NavLink to = "/user-dashboard">
+						<FontAwesomeIcon icon={faUser} style={{ marginRight: "8px" }} /> Profile
+						</NavLink>
 						 <button onClick={handleLogout}><FontAwesomeIcon icon={faSignOut} style={{ marginRight: "8px" }} />Logout</button>
+						 </> 
 					) : ( 
 						<NavLink to="/Account">
                         <FontAwesomeIcon icon={faUser} style={{ marginRight: "8px" }} /> Account
