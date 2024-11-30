@@ -18,16 +18,12 @@ public class Movies {
     @Column(name = "Time")
     private String time;
     
-    @Column(name = "Path")
-    private String path;
-    
     public Movies() {}
 
-    public Movies(String title, String date, String time ,String path) {
+    public Movies(String title, String date, String time) {
         this.title = title;
         this.date = date;
         this.time = time;
-        this.path = path;
     }
     
     public String getTitle() {
@@ -54,11 +50,5 @@ public class Movies {
         this.time = time;
     }
     
-    public String getPath() {
-        return path;
-    }
-
-    public void setPath(String path) {
-        this.path = path;
-    }
+    
 }
