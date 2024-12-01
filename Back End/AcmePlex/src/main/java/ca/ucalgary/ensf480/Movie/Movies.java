@@ -18,12 +18,16 @@ public class Movies {
     @Column(name = "Time")
     private String time;
     
+    @Column(name = "Seats")
+    private String seats;
+    
     public Movies() {}
 
-    public Movies(String title, String date, String time) {
+    public Movies(String title, String date, String time, String seats) {
         this.title = title;
         this.date = date;
         this.time = time;
+        this.seats = seats;
     }
     
     public String getTitle() {
@@ -50,5 +54,12 @@ public class Movies {
         this.time = time;
     }
     
+    public void setSeats(String seats) {
+    	this.seats = seats;
+    }
+    
+    public String getSeats() {
+    	return seats;
+    }
     
 }

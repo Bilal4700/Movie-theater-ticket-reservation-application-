@@ -24,6 +24,22 @@ public class MovieServices {
         return movieRepository.findByTitle(title);
     }
     
+    public String updateSeats(String title, String newSeat) {
+    	
+    	Movies movie =movieRepository.findByTitle(title);
+    	String bookedSeats = movie.getSeats();
+    	if(bookedSeats == null || bookedSeats.isEmpty()) {
+    		movie.setSeats(newSeat);
+    	}
+    	else {
+    		movie.setSeats(bookedSeats + "," + newSeat);
+    	}
+    	
+    	movieRepository.save(movie);
+    	
+    	return movie.getSeats();
+    	
+    }
     
     
 }

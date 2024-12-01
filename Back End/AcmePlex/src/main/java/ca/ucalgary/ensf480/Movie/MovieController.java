@@ -29,7 +29,12 @@ public class MovieController {
     public Movies searchMovie(@PathVariable String title) {
         return movieServices.getMovieByTitle(title);
     }
-    
+        
+    @PutMapping("/{title}/seats")
+    public String updateSeats(@PathVariable String title, String seat) {
+        String updatedSeats = movieServices.updateSeats(title, seat);
+        return "Updated seats: " + updatedSeats;
+    }
     
 
     
