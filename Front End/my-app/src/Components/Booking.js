@@ -30,9 +30,8 @@ function Booking() {
 
 	//for Seat map functinos start here
 
-	const [selectedSeats, setSelectedSeats] = useState('1,3,5,100');
-	const rows = 5;
-	const columns = 10;
+	const [selectedSeats, setSelectedSeats] = useState('1,3,5,10'); // putting values to check disable seats 
+
 
 	// Function to fetch selected seats from the backend
 	const fetchSelectedSeats = () => {
