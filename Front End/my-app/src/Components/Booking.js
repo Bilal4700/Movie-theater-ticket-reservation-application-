@@ -58,7 +58,8 @@ function Booking() {
 	
 
 	const renderSeats = () => {
-		const seatsArray = selectedSeats.split(",").map(Number);
+		
+		const seatsArray = selectedSeats ? selectedSeats.split(",").map(Number) : [];
 		const rows = 5;
 		const columns = 10;
 		const seats = [];
@@ -161,12 +162,38 @@ function Booking() {
 	};
 
 	const handlePaymentSubmit = () => {
-        console.log(`Submitting payment for seat ${selectedSeatForPayment}`);
-        
-        setSelectedSeatForPayment(null);
-        closePaymentPopup();
-        fetchSelectedSeats(); 
-    };
+		console.log(`Submitting payment for seat ${selectedSeatForPayment}`);
+	
+		
+		const formData = new URLSearchParams();
+		formData.append("seat", selectedSeatForPayment);
+	
+		fetch(`http://localhost:8080/Movies/${movie}/seats`, {
+			method: "PUT",
+			headers: {
+				"Content-Type": "application/x-www-form-urlencoded", 
+			},
+			body: formData.toString(), 
+		})
+			.then((response) => {
+				if (!response.ok) {
+					throw new Error("Failed to update seat");
+				}
+				return response.text(); 
+			})
+			.then((data) => {
+				console.log(data); 
+				setSelectedSeatForPayment(null);
+				closePaymentPopup();
+				fetchSelectedSeats();
+			})
+			.catch((error) => {
+				console.error("Error submitting payment:", error);
+			});
+	};
+	
+	
+	
 
 	return (
 		<div className="container">
