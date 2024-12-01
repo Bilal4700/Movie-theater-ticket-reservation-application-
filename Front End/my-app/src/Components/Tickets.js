@@ -6,10 +6,6 @@ import Venom from "../movies_img/Venom.jpg";
 import { useNavigate } from "react-router-dom";
 
 
-
-
-
-
 function Tickets() {
   const navigate = useNavigate();
 
@@ -20,7 +16,7 @@ function Tickets() {
     <div className="tickets-container">
       <h1 className="header"> Movies Available for Tickets</h1>
 
-      
+      <div className="movie-cards-container">
       <div className="movie-card">
         <img className="movie-poster" src={FightClub} alt="Fight Club" onClick={() => handleClick("FightClub")}/>
         <h2 className="movie-title">Fight Club</h2>
@@ -36,6 +32,7 @@ function Tickets() {
       <div className="movie-card">
         <img className="movie-poster" src={Venom} alt="Venom" onClick={() => handleClick("Venom")}/>
         <h2 className="movie-title">Venom</h2>
+      </div>
       </div>
     </div>
   );

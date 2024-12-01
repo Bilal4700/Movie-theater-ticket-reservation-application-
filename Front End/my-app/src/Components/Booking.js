@@ -38,7 +38,7 @@ function Booking() {
         <img className="movie-poster" src={imageMap[movie]} alt={movie} />
       </div>
       <h1 className="title">🎬 {movie}</h1>
-      <p className="message">Do your booking</p>
+      <p className="message">Book Your Tickets Now!</p>
       <div className="movie-details">
         <p>
           <strong>Date:</strong> {movieDetails.date}
