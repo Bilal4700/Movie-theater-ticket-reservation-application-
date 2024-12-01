@@ -30,8 +30,9 @@ function Booking() {
 
 	//for Seat map functinos start here
 
-	const [selectedSeats, setSelectedSeats] = useState("1,3,5,10"); // putting values to check disable seats
+	const [selectedSeats, setSelectedSeats] = useState("1,5,7"); // putting values to check disable seats
 	const [isPaymentPopupVisible, setIsPaymentPopupVisible] = useState(false);
+    const [selectedSeatForPayment, setSelectedSeatForPayment] = useState(null);
 
 	// Handlers for managing Payment popup visibility
 	const openPaymentPopup = () => setIsPaymentPopupVisible(true);
@@ -42,10 +43,14 @@ function Booking() {
 
 	useEffect(() => {
 		fetchSelectedSeats();
-	}, []);
+	}, [selectedSeats]);
 
 	const handleSeatClick = (seatNumber) => {
-        renderPaymentPopup();
+
+        // Store the selected seat and show the payment popup
+        setSelectedSeatForPayment(seatNumber);
+        console.log(` ${selectedSeatForPayment}`)
+        openPaymentPopup();
     };
 
 	const renderSeats = () => {
@@ -59,21 +64,12 @@ function Booking() {
 			const row = [];
 			for (let j = 0; j < columns; j++) {
 				const isSelected = seatsArray.includes(seatNumber);
-
-				let title;
-				if (isSelected) {
-					title = `Seat ${seatNumber} selected`;
-				} else {
-					title = `Seat ${seatNumber} available`;
-				}
-
 				let seatClass;
 				if (isSelected) {
 					seatClass = "seat selected";
 				} else {
 					seatClass = "seat";
 				}
-
 				row.push(
 					<div
 						key={seatNumber}
@@ -82,10 +78,9 @@ function Booking() {
 						onClick={() => {
 							if (!isSelected) {
 								handleSeatClick(seatNumber);
-                                {renderPaymentPopup()}
 							}
 						}}
-						title={title}
+
 					>
 						<FontAwesomeIcon icon={faChair} />
 						<span>{seatNumber}</span>
@@ -159,7 +154,13 @@ function Booking() {
 		);
 	};
 
-	const handlePaymentSubmit = () => {};
+	const handlePaymentSubmit = () => {
+        console.log(`Submitting payment for seat ${selectedSeatForPayment}`);
+        
+        setSelectedSeatForPayment(null);
+        closePaymentPopup();
+        fetchSelectedSeats(); 
+    };
 
 	return (
 		<div className="container">
@@ -180,10 +181,6 @@ function Booking() {
 			<div className="seat-map">
 				<h2>Seat Map</h2>
 				{renderSeats()}
-			</div>
-
-			<div>
-				<button onClick={openPaymentPopup}>payment</button>
 			</div>
 			{renderPaymentPopup()}
 		</div>
