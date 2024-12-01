@@ -30,8 +30,10 @@ function Home() {
   const [movies, setMovies] = useState([]);
   const [filteredMovies, setFilteredMovies] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [userEmail, setUserEmail] = useState(null);
   const navigate = useNavigate();
-  const available_movies = ["FightClub", "Inception", "Shooter"];
+  const available_movies_public = ["FightClub", "Inception", "Shooter"];
+  const available_movies_rusers = ["FightClub", "Inception", "Venom", "Balistic", "Uprising", "TakeCover"];
 
   const fetchMovies = () => {
     fetch("http://localhost:8080/Movies")
@@ -53,14 +55,24 @@ function Home() {
   };
 
   const HandleClick = (movieTitle) => {
-    if (available_movies.includes(movieTitle)) {
-      navigate(`/Tickets/${movieTitle}`);
-    } else {
-      navigate(`/ComingSoon/${movieTitle}`);
-    }
+	if (userEmail) {
+		if (available_movies_rusers.includes(movieTitle)) {
+		  navigate(`/Tickets/${movieTitle}`);
+		} else {
+		  navigate(`/ComingSoon/${movieTitle}`);
+		}
+	} else {
+		if (available_movies_public.includes(movieTitle)) {
+		  navigate(`/Tickets/${movieTitle}`);
+		} else {
+		  navigate(`/ComingSoon/${movieTitle}`);
+		}
+	}
   };
 
   useEffect(() => {
+	const email = localStorage.getItem("userEmail");
+    setUserEmail(email);
     fetchMovies();
   }, []);
 
