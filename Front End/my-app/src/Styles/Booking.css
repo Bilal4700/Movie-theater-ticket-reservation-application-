@@ -95,3 +95,61 @@
   border-radius: 8px;
   background-color: rgba(0, 0, 0, 0.8);
 }
+
+/* Payment popup */
+.Payment-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8); /* Darker background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Popup content */
+.Payment-popup-content {
+  width: 400px; 
+  padding: 30px; 
+  background-color: #222; 
+  border-radius: 10px;
+  text-align: center;
+  color: #fff; 
+}
+
+/* Close button */
+.close-popup {
+  margin-top: 20px;
+  padding: 10px 15px;
+  background-color: #d9534f;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.close-popup:hover {
+  background-color: #c9302c;
+}
+
+.payment-fields {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+.payment-fields label {
+  display: block;
+  margin-bottom: 4px;
+}
+
+.payment-fields input {
+  padding: 8px;
+  border-radius: 6px;
+  max-width: 120px;
+}

@@ -30,71 +30,136 @@ function Booking() {
 
 	//for Seat map functinos start here
 
-	const [selectedSeats, setSelectedSeats] = useState('1,3,5,10'); // putting values to check disable seats 
+	const [selectedSeats, setSelectedSeats] = useState("1,3,5,10"); // putting values to check disable seats
+	const [isPaymentPopupVisible, setIsPaymentPopupVisible] = useState(false);
 
+	// Handlers for managing Payment popup visibility
+	const openPaymentPopup = () => setIsPaymentPopupVisible(true);
+	const closePaymentPopup = () => setIsPaymentPopupVisible(false);
 
 	// Function to fetch selected seats from the backend
-	const fetchSelectedSeats = () => {
-
-  };
+	const fetchSelectedSeats = () => {};
 
 	useEffect(() => {
 		fetchSelectedSeats();
 	}, []);
 
-	const handleSeatClick = () => {
-
-  };
+	const handleSeatClick = (seatNumber) => {
+        renderPaymentPopup();
+    };
 
 	const renderSeats = () => {
-        const seatsArray = selectedSeats.split(',').map(Number);
-        const rows = 5;
-        const columns = 10;
-        const seats = [];
-        let seatNumber = 1;
+		const seatsArray = selectedSeats.split(",").map(Number);
+		const rows = 5;
+		const columns = 10;
+		const seats = [];
+		let seatNumber = 1;
 
-        for (let i = 0; i < rows; i++) {
-            const row = [];
-            for (let j = 0; j < columns; j++) {
-                const isSelected = seatsArray.includes(seatNumber);
+		for (let i = 0; i < rows; i++) {
+			const row = [];
+			for (let j = 0; j < columns; j++) {
+				const isSelected = seatsArray.includes(seatNumber);
 
-                let title;
-                if (isSelected) {
-                    title = `Seat ${seatNumber} selected`;
-                } else {
-                    title = `Seat ${seatNumber} available`;
-                }
+				let title;
+				if (isSelected) {
+					title = `Seat ${seatNumber} selected`;
+				} else {
+					title = `Seat ${seatNumber} available`;
+				}
 
-                let seatClass;
-                if (isSelected) {
-                    seatClass = 'seat selected';
-                } else {
-                    seatClass = 'seat';
-                }
+				let seatClass;
+				if (isSelected) {
+					seatClass = "seat selected";
+				} else {
+					seatClass = "seat";
+				}
 
-                row.push(
-                    <div
-                        key={seatNumber}
-                        className={seatClass}
-                        // eslint-disable-next-line no-loop-func
-                        onClick={() => {
-                            if (!isSelected) {
-                                handleSeatClick(seatNumber);
-                            }
-                        }}
-                        title={title}
-                    >
-                        <FontAwesomeIcon icon={faChair} />
-                        <span>{seatNumber}</span>
-                    </div>
-                );
-                seatNumber++;
-            }
-            seats.push(<div className="row" key={i}>{row}</div>);
-        }
+				row.push(
+					<div
+						key={seatNumber}
+						className={seatClass}
+						// eslint-disable-next-line no-loop-func
+						onClick={() => {
+							if (!isSelected) {
+								handleSeatClick(seatNumber);
+                                {renderPaymentPopup()}
+							}
+						}}
+						title={title}
+					>
+						<FontAwesomeIcon icon={faChair} />
+						<span>{seatNumber}</span>
+					</div>
+				);
+				seatNumber++;
+			}
+			seats.push(
+				<div className="row" key={i}>
+					{row}
+				</div>
+			);
+		}
 
-        return seats;
-    };
+		return seats;
+	};
+
+	const renderPaymentPopup = () => {
+		if (!isPaymentPopupVisible) return null;
+
+		return (
+			<div className="Payment-popup">
+				<div className="Payment-popup-content">
+					<h2>Payment</h2>
+					<form onSubmit={handlePaymentSubmit}>
+						<label htmlFor="cnn">Credit Card Number</label>
+						<input
+							type="tel"
+							id="ccn"
+							name="ccn"
+							placeholder="xxxx xxxx xxxx xxxx"
+							inputMode="numeric"
+							pattern="[0-9\s]{16}"
+							maxLength="19"
+							required
+						/>
+						<div className="payment-fields">
+							<label htmlFor="exp">Exp</label>
+							<input
+								type="tel"
+								id="exp"
+								name="exp"
+								placeholder="MM/YY"
+								inputMode="numeric"
+								pattern="(0[1-9]|1[0-2])\/\d{2}"
+								maxLength="5"
+								required
+							/>
+
+							<label htmlFor="cvv">CVV</label>
+							<input
+								type="tel"
+								id="cvv"
+								name="cvv"
+								placeholder="xxx"
+								inputMode="numeric"
+								pattern="\d{3}"
+								maxLength="3"
+								required
+							/>
+						</div>
+						<button type="submit" className="submit-button">
+							Buy
+						</button>
+					</form>
+					<button className="close-popup" onClick={closePaymentPopup}>
+						Close
+					</button>
+				</div>
+			</div>
+		);
+	};
+
+	const handlePaymentSubmit = () => {};
 
 	return (
 		<div className="container">
@@ -116,6 +181,11 @@ function Booking() {
 				<h2>Seat Map</h2>
 				{renderSeats()}
 			</div>
+
+			<div>
+				<button onClick={openPaymentPopup}>payment</button>
+			</div>
+			{renderPaymentPopup()}
 		</div>
 	);
 }
