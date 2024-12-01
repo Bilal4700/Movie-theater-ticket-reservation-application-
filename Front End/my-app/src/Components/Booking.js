@@ -46,12 +46,11 @@ function Booking() {
 	}, [selectedSeats]);
 
 	const handleSeatClick = (seatNumber) => {
-
-        // Store the selected seat and show the payment popup
-        setSelectedSeatForPayment(seatNumber);
-        console.log(` ${selectedSeatForPayment}`)
-        openPaymentPopup();
-    };
+		setSelectedSeatForPayment(seatNumber);
+		console.log(`Selected seat for payment: ${seatNumber}`);
+		openPaymentPopup();
+	};
+	
 
 	const renderSeats = () => {
 		const seatsArray = selectedSeats.split(",").map(Number);
@@ -63,6 +62,7 @@ function Booking() {
 		for (let i = 0; i < rows; i++) {
 			const row = [];
 			for (let j = 0; j < columns; j++) {
+
 				const isSelected = seatsArray.includes(seatNumber);
 				let seatClass;
 				if (isSelected) {
@@ -70,6 +70,7 @@ function Booking() {
 				} else {
 					seatClass = "seat";
 				}
+				const currentSeatNumber = seatNumber;
 				row.push(
 					<div
 						key={seatNumber}
@@ -77,7 +78,7 @@ function Booking() {
 						// eslint-disable-next-line no-loop-func
 						onClick={() => {
 							if (!isSelected) {
-								handleSeatClick(seatNumber);
+								handleSeatClick(currentSeatNumber);
 							}
 						}}
 
@@ -94,7 +95,7 @@ function Booking() {
 				</div>
 			);
 		}
-
+		
 		return seats;
 	};
 
