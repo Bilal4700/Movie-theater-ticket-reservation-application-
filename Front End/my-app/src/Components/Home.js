@@ -32,7 +32,7 @@ function Home() {
   const [searchTerm, setSearchTerm] = useState("");
   const [userEmail, setUserEmail] = useState(null);
   const navigate = useNavigate();
-  const available_movies_public = ["FightClub", "Inception", "Shooter"];
+  const available_movies_public = ["FightClub", "Inception", "Venom"];
   const available_movies_rusers = ["FightClub", "Inception", "Venom", "Balistic", "Uprising", "TakeCover"];
 
   const fetchMovies = () => {
