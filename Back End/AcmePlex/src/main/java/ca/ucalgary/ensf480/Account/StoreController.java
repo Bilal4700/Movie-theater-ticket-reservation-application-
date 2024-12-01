@@ -3,7 +3,9 @@ package ca.ucalgary.ensf480.Account;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
@@ -40,7 +42,7 @@ public class StoreController {
 
 
         }
- // Endpoint to fetch a user's details by their username
+
     @GetMapping("/users/{username}")
     public User getUser(@PathVariable String username) {
         return userService.getUserByUsername(username);
@@ -51,4 +53,16 @@ public class StoreController {
     public List<User> getAllUsers() {
         return userService.getAllUsers();
     }
+
+
+    
+    @GetMapping("/users/email/{email}")
+    public User getUserByEmail(@PathVariable String email) {
+        User user = userService.findByEmail(email);
+        if (user == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
+        }
+        return user;
+    }
+
     }

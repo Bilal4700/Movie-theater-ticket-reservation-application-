@@ -1,17 +1,21 @@
-
 import "../Styles/Booking.css"
 import { useParams } from "react-router-dom";
 import React, { useState, useEffect } from "react";
-
 import FightClub from "../movies_img/FightClub.jpg";
 import Inception from "../movies_img/Inception.jpg";
 import Venom from "../movies_img/Venom.jpg";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {faChair} from "@fortawesome/free-solid-svg-icons";
 
 const imageMap = {
   FightClub: FightClub,
   Inception: Inception,
   Venom: Venom,
 }
+
+const rows = 5; // Number of rows
+const cols = 10;
+
 function Booking() {
   const { movie } = useParams(); 
   const [movieDetails, setMovieDetails] = useState({ date: "", time: "" });
@@ -43,10 +47,32 @@ function Booking() {
           <strong>Time:</strong> {movieDetails.time}
         </p>
       </div>
+
+      <div className="cinema-map">
+      <h2>Cinema Seating</h2>
+      <div className="cinema-seating">
+        {Array.from({ length: rows }).map((_, rowIndex) => (
+          <div key={rowIndex} className="cinema-row">
+            {Array.from({ length: cols }).map((_, colIndex) => (
+              <div key={colIndex} className="cinema-chair">
+                <FontAwesomeIcon
+                  icon={faChair}
+                  className="chair-icon"
+                  title={`Chair ${rowIndex + 1}-${colIndex + 1}`}
+                />
+                <div className="cinema-seat-number">
+                  {rowIndex + 1}-{colIndex + 1}
+                </div>
+              </div>
+            ))}
+          </div>
+        ))}
+      </div>
+    </div>
+  
+      
     </div>
   );
 }
 
 export default Booking;
-  
-

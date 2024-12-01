@@ -3,11 +3,17 @@ import "../Styles/UserDashboard.css";
 
 function UserDashboard() {
   const [user, setUser] = useState(null); // State to store user data
-  const username = "fateh.syedb"; // Replace with dynamic logic if needed
 
   useEffect(() => {
-    // Fetch user details from the backend
-    fetch(`http://localhost:8080/users/${username}`)
+    // Get the logged-in user's email from localStorage
+    const email = localStorage.getItem("userEmail");
+    if (!email) {
+      console.error("No user is logged in.");
+      return;
+    }
+
+    // Fetch user details from the backend using the email
+    fetch(`http://localhost:8080/users/email/${email}`)
       .then((res) => {
         if (res.ok) {
           return res.json();
@@ -17,7 +23,7 @@ function UserDashboard() {
       })
       .then((data) => setUser(data))
       .catch((error) => console.error("Error fetching user:", error));
-  }, [username]);
+  }, []);
 
   if (!user) {
     return <p>Loading user details...</p>;
