@@ -30,7 +30,7 @@ function Booking() {
 
 	//for Seat map functinos start here
 
-	const [selectedSeats, setSelectedSeats] = useState("1,5,7"); // putting values to check disable seats
+	const [selectedSeats, setSelectedSeats] = useState(""); // putting values to check disable seats
 	const [isPaymentPopupVisible, setIsPaymentPopupVisible] = useState(false);
     const [selectedSeatForPayment, setSelectedSeatForPayment] = useState(null);
 
@@ -39,7 +39,12 @@ function Booking() {
 	const closePaymentPopup = () => setIsPaymentPopupVisible(false);
 
 	// Function to fetch selected seats from the backend
-	const fetchSelectedSeats = () => {};
+	const fetchSelectedSeats = () => {
+		fetch(`http://localhost:8080/Movies/${movie}`)
+			.then((res) => res.json())
+			.then((data) => setSelectedSeats(data.seats))
+			.catch((error) => console.log("Error fetching movie details:", error));
+	};
 
 	useEffect(() => {
 		fetchSelectedSeats();
