@@ -33,7 +33,6 @@ function Booking() {
 	const [selectedSeats, setSelectedSeats] = useState(""); // putting values to check disable seats
 	const [isPaymentPopupVisible, setIsPaymentPopupVisible] = useState(false);
     const [selectedSeatForPayment, setSelectedSeatForPayment] = useState(null);
-	const [user, setUser] = useState(null);
 	const [ccn, setCcn] = useState(''); 
 	const [exp, setExp] = useState(''); 
 	const [cvv, setCvv] = useState(''); 
@@ -74,7 +73,6 @@ function Booking() {
 			}
 		  })
 		  .then((data) => {
-			setUser(data);
 			if (data) {
 			  setCcn(data.ccn || '');
 			  setExp(data.exp || '');
