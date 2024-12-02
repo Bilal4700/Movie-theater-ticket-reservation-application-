@@ -33,18 +33,60 @@ function Booking() {
 	const [selectedSeats, setSelectedSeats] = useState(""); // putting values to check disable seats
 	const [isPaymentPopupVisible, setIsPaymentPopupVisible] = useState(false);
     const [selectedSeatForPayment, setSelectedSeatForPayment] = useState(null);
+	const [user, setUser] = useState(null);
+	const [ccn, setCcn] = useState(''); 
+	const [exp, setExp] = useState(''); 
+	const [cvv, setCvv] = useState(''); 
 
-	// Handlers for managing Payment popup visibility
 	const openPaymentPopup = () => setIsPaymentPopupVisible(true);
 	const closePaymentPopup = () => setIsPaymentPopupVisible(false);
 
-	// Function to fetch selected seats from the backend
 	const fetchSelectedSeats = () => {
 		fetch(`http://localhost:8080/Movies/${movie}`)
 			.then((res) => res.json())
 			.then((data) => setSelectedSeats(data.seats))
 			.catch((error) => console.log("Error fetching movie details:", error));
 	};
+
+	useEffect(() => {
+		if (!isPaymentPopupVisible) {
+		  setCcn('');
+		  setExp('');
+		  setCvv('');
+		  return;
+		}
+	
+		const email = localStorage.getItem('userEmail');
+	
+		if (!email) {
+		  setCcn('');
+		  setExp('');
+		  setCvv('');
+		  return;
+		}
+	
+		fetch(`http://localhost:8080/users/email/${email}`)
+		  .then((res) => {
+			if (res.ok) {
+			  return res.json();
+			} else {
+			  throw new Error('Failed to fetch user data');
+			}
+		  })
+		  .then((data) => {
+			if (data) {
+			  setCcn(data.ccn || '');
+			  setExp(data.exp || '');
+			  setCvv(data.cvv || '');
+			}
+		  })
+		  .catch((error) => {
+			console.error('Error fetching user:', error);
+			setCcn('');
+			setExp('');
+			setCvv('');
+		  });
+	  }, [isPaymentPopupVisible]);
 
 	useEffect(() => {
 		fetchSelectedSeats();
@@ -81,7 +123,6 @@ function Booking() {
 					<div
 						key={seatNumber}
 						className={seatClass}
-						// eslint-disable-next-line no-loop-func
 						onClick={() => {
 							if (!isSelected) {
 								handleSeatClick(currentSeatNumber);
@@ -106,60 +147,69 @@ function Booking() {
 	};
 
 	const renderPaymentPopup = () => {
+		
 		if (!isPaymentPopupVisible) return null;
-
+	  
+		
+	  
 		return (
-			<div className="Payment-popup">
-				<div className="Payment-popup-content">
-					<h2>Payment</h2>
-					<form onSubmit={handlePaymentSubmit}>
-						<label htmlFor="cnn">Credit Card Number</label>
-						<input
-							type="tel"
-							id="ccn"
-							name="ccn"
-							placeholder="xxxx xxxx xxxx xxxx"
-							inputMode="numeric"
-							pattern="[0-9\s]{16}"
-							maxLength="19"
-							required
-						/>
-						<div className="payment-fields">
-							<label htmlFor="exp">Exp</label>
-							<input
-								type="tel"
-								id="exp"
-								name="exp"
-								placeholder="MM/YY"
-								inputMode="numeric"
-								pattern="(0[1-9]|1[0-2])\/\d{2}"
-								maxLength="5"
-								required
-							/>
-
-							<label htmlFor="cvv">CVV</label>
-							<input
-								type="tel"
-								id="cvv"
-								name="cvv"
-								placeholder="xxx"
-								inputMode="numeric"
-								pattern="\d{3}"
-								maxLength="3"
-								required
-							/>
-						</div>
-						<button type="submit" className="submit-button">
-							Buy
-						</button>
-					</form>
-					<button className="close-popup" onClick={closePaymentPopup}>
-						Close
-					</button>
+		  <div className="Payment-popup">
+			<div className="Payment-popup-content">
+			  <h2>Payment</h2>
+			  <form onSubmit={handlePaymentSubmit}>
+				<label htmlFor="ccn">Credit Card Number</label>
+				<input
+				  type="tel"
+				  id="ccn"
+				  name="ccn"
+				  placeholder="xxxx xxxx xxxx xxxx"
+				  inputMode="numeric"
+				  pattern="[0-9\s]{16}"
+				  maxLength="19"
+				  required
+				  value={ccn}
+				  onChange={(e) => setCcn(e.target.value)}
+				/>
+				<div className="payment-fields">
+				  <label htmlFor="exp">Exp</label>
+				  <input
+					type="tel"
+					id="exp"
+					name="exp"
+					placeholder="MM/YY"
+					inputMode="numeric"
+					pattern="(0[1-9]|1[0-2])\/\d{2}"
+					maxLength="5"
+					required
+					value={exp}
+					onChange={(e) => setExp(e.target.value)}
+				  />
+	  
+				  <label htmlFor="cvv">CVV</label>
+				  <input
+					type="tel"
+					id="cvv"
+					name="cvv"
+					placeholder="xxx"
+					inputMode="numeric"
+					pattern="\d{3}"
+					maxLength="3"
+					required
+					value={cvv}
+					onChange={(e) => setCvv(e.target.value)}
+				  />
 				</div>
+				<button type="submit" className="submit-button">
+				  Buy
+				</button>
+			  </form>
+			  <button className="close-popup" onClick={closePaymentPopup}>
+				Close
+			  </button>
 			</div>
+		  </div>
 		);
-	};
+	  };
 
 	const handlePaymentSubmit = () => {
 		console.log(`Submitting payment for seat ${selectedSeatForPayment}`);
