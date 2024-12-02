@@ -64,5 +64,11 @@ public class StoreController {
         }
         return user;
     }
+    
+    @PutMapping("/users/tickets/{email}")
+    public String updateSeats(@PathVariable String email,  String tickets) {
+        String updatedTickets = userService.updateTickets(email, tickets);
+        return "Updated Tickets: " + updatedTickets;
+    }
 
     }
