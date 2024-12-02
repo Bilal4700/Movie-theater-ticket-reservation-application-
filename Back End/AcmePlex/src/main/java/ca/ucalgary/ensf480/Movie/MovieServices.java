@@ -5,6 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import ca.ucalgary.ensf480.Movie.MovieRepository;
+import ca.ucalgary.ensf480.Movie.Movies;
+
 
 @Service
 public class MovieServices {

@@ -40,7 +40,8 @@ function Booking() {
 
 	const openPaymentPopup = () => setIsPaymentPopupVisible(true);
 	const closePaymentPopup = () => setIsPaymentPopupVisible(false);
-
+		 
+	
 	const fetchSelectedSeats = () => {
 		fetch(`http://localhost:8080/Movies/${movie}`)
 			.then((res) => res.json())
@@ -156,7 +157,12 @@ function Booking() {
 		  <div className="Payment-popup">
 			<div className="Payment-popup-content">
 			  <h2>Payment</h2>
-			  <form onSubmit={handlePaymentSubmit}>
+			  <form
+				onSubmit={(e) => {
+					e.preventDefault();
+					handlePaymentSubmit(e);
+				}}
+					>
 				<label htmlFor="ccn">Credit Card Number</label>
 				<input
 				  type="tel"
@@ -212,12 +218,12 @@ function Booking() {
 	  };
 
 	const handlePaymentSubmit = () => {
+		
 		console.log(`Submitting payment for seat ${selectedSeatForPayment}`);
 	
-		
 		const formData = new URLSearchParams();
 		formData.append("seat", selectedSeatForPayment);
-	
+		console.log("Form Data:", formData.toString());
 		fetch(`http://localhost:8080/Movies/${movie}/seats`, {
 			method: "PUT",
 			headers: {
@@ -241,7 +247,6 @@ function Booking() {
 				console.error("Error submitting payment:", error);
 			});
 	};
-	
 	
 	
 
