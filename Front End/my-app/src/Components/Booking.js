@@ -4,6 +4,9 @@ import React, { useState, useEffect } from "react";
 import FightClub from "../movies_img/FightClub.jpg";
 import Inception from "../movies_img/Inception.jpg";
 import Venom from "../movies_img/Venom.jpg";
+import TakeCover from "../movies_img/TakeCover.jpg";
+import Balistic from "../movies_img/Balistic.jpg";
+import Uprising from "../movies_img/Uprising.jpg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChair } from "@fortawesome/free-solid-svg-icons";
 
@@ -11,6 +14,9 @@ const imageMap = {
 	FightClub: FightClub,
 	Inception: Inception,
 	Venom: Venom,
+	Balistic: Balistic,
+	TakeCover: TakeCover,
+	Uprising: Uprising,
 };
 
 function Booking() {
