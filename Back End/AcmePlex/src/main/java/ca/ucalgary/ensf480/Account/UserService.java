@@ -49,19 +49,5 @@ public class UserService {
     public User findByEmail(String email) {
         return userRepository.findByEmail(email);
     }
-    
-    public String updateTickets(String email,String newTicket) {
-    	User user = userRepository.findByEmail(email);
-    	String oldTickets = user.getTickets();
-    	if(oldTickets == null || oldTickets.isEmpty()) {
-    		user.setTickets(newTicket);
-    	}else {
-    		user.setTickets(oldTickets + ","+ newTicket);
-    	}
-    	userRepository.save(user);
-    	return user.getTickets();
-    }
-    
-    
 
 }

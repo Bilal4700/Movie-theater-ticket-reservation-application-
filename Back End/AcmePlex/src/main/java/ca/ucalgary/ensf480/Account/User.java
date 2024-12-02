@@ -28,20 +28,16 @@ public class User {
     @Column(name = "EXP")
     private String exp;
     
-    @Column(name = "Tickets")
-    private String tickets;
-    
     public User() {
     }
 
-    public User(String username, String email, String password, String ccn, String cvv, String exp , String tickets) {
+    public User(String username, String email, String password, String ccn, String cvv, String exp) {
         this.username = username;
         this.email = email;
         this.password = password;
         this.ccn = ccn;
         this.cvv = cvv;
         this.exp = exp;
-        this.tickets = tickets;
     }
 
     public String getUsername() {
@@ -90,14 +86,5 @@ public class User {
     
     public void setEXP(String exp) {
     	this.exp = exp;
-    }
-    
-    public void setTickets(String tickets) {
-    	this.tickets = tickets;
-    	
-    }
-    
-    public String getTickets() {
-    	return tickets;
     }
 }
