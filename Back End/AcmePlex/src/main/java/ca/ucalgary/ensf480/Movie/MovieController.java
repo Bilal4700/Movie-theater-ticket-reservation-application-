@@ -36,7 +36,12 @@ public class MovieController {
         return "Updated seats: " + updatedSeats;
     }
     
+    @PutMapping("/refund/{title}/{seatNumber}")
+    public String refundMovieSeat(
+            @PathVariable String title,
+            @PathVariable int seatNumber) {
+        return movieServices.refundSeat(title, seatNumber);
+    }
 
-    
         
 }

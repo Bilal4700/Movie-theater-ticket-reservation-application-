@@ -1,6 +1,9 @@
 package ca.ucalgary.ensf480.Account;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import ca.ucalgary.ensf480.Movie.MovieRepository;
 import ca.ucalgary.ensf480.Movie.Movies;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,6 +78,25 @@ public class UserService {
         userRepository.save(user);
         return user.getTickets();
     }
+    
+    public String refundTicket(String email, String movieTitle, int seatNumber) {
+        User user = userRepository.findByEmail(email);
+        if (user == null) {
+            throw new IllegalArgumentException("User not found");
+        }
+
+        String tickets = user.getTickets();
+
+        String updatedTickets = Arrays.stream(tickets.split(","))
+                .filter(ticket -> !ticket.equals(movieTitle + " Seat number " + seatNumber))
+                .collect(Collectors.joining(","));
+
+        user.setTickets(updatedTickets.isEmpty() ? null : updatedTickets);
+        userRepository.save(user);
+
+        return updatedTickets.isEmpty() ? "null" : updatedTickets;
+    }
+
 
 
 }

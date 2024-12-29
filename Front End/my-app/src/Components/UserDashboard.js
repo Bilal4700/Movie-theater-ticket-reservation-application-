@@ -12,6 +12,7 @@ function UserDashboard() {
       return;
     }
 
+    // Fetch user details
     fetch(`http://localhost:8080/users/email/${email}`)
       .then((res) => {
         if (res.ok) {
@@ -23,11 +24,12 @@ function UserDashboard() {
       .then((data) => {
         setUser(data);
 
+        // Fetch user tickets
         return fetch(`http://localhost:8080/users/tickets/${email}`);
       })
       .then((res) => {
         if (res.ok) {
-          return res.json(); 
+          return res.json();
         } else {
           throw new Error("Failed to fetch tickets");
         }
@@ -39,6 +41,51 @@ function UserDashboard() {
         console.error("Error:", error);
       });
   }, []);
+
+  const handleRefund = (ticket) => {
+    const email = localStorage.getItem("userEmail");
+    if (!email) {
+      console.error("No user is logged in.");
+      return;
+    }
+
+    // Extract movie and seat number from the ticket
+    const parts = ticket.split(" Seat number ");
+    const movie = parts[0];
+    const seatNumber = parts[1];
+
+    // Refund the user ticket
+    fetch(`http://localhost:8080/users/refund/${email}/${movie}/${seatNumber}`, {
+      method: "PUT",
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Failed to refund user ticket");
+        }
+        return res.text();
+      })
+      .then(() => {
+        // Refund the movie seat
+        return fetch(`http://localhost:8080/Movies/refund/${movie}/${seatNumber}`, {
+          method: "PUT",
+        });
+      })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Failed to refund movie seat");
+        }
+        return res.text();
+      })
+      .then(() => {
+        // Remove the refunded ticket from the UI
+        setTickets((prevTickets) =>
+          prevTickets.filter((t) => t !== ticket)
+        );
+      })
+      .catch((error) => {
+        console.error("Error refunding ticket:", error);
+      });
+  };
 
   if (!user) {
     return <p>Loading user details...</p>;
@@ -55,7 +102,15 @@ function UserDashboard() {
         {tickets.length > 0 ? (
           <ul className="tickets-list">
             {tickets.map((ticket, index) => (
-              <li key={index}>{ticket}</li>
+              <li key={index}>
+                {ticket}
+                <button
+                  className="refund-button"
+                  onClick={() => handleRefund(ticket)}
+                >
+                  Refund
+                </button>
+              </li>
             ))}
           </ul>
         ) : (

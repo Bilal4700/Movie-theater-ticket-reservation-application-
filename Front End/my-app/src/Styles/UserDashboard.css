@@ -36,16 +36,30 @@
   font-size: 18px;
   background-color: rgba(255, 255, 255, 0.1);
   margin: 8px 0;
-  padding: 10px;
+  padding: 10px 15px;
   border-radius: 8px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.loading-message {
-  font-size: 20px;
-  color: #aaaaaa;
-  margin-top: 40px;
-  animation: fade 1.8s infinite;
+.refund-button {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
+.refund-button:hover {
+  background-color: #c0392b;
+}
 
+.tv-logo {
+  font-size: 60px;
+  color: #3498db;
+}

@@ -8,7 +8,7 @@ import TakeCover from "../movies_img/TakeCover.jpg";
 import Balistic from "../movies_img/Balistic.jpg";
 import Uprising from "../movies_img/Uprising.jpg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChair } from "@fortawesome/free-solid-svg-icons";
+import { faChair, faTv } from "@fortawesome/free-solid-svg-icons";
 
 const imageMap = {
 	FightClub: FightClub,
@@ -304,6 +304,9 @@ function Booking() {
 
 			<div className="seat-map">
 				<h2>Seat Map</h2>
+				<div className="tv-logo">
+					<FontAwesomeIcon icon={faTv} />
+				</div>
 				{renderSeats()}
 			</div>
 			{renderPaymentPopup()}

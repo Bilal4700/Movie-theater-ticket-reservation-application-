@@ -86,6 +86,15 @@ public class StoreController {
         }
         return List.of(tickets.split(",")); // Split tickets into a JSON array
     }
+    
+    @PutMapping("/users/refund/{email}/{movieTitle}/{seatNumber}")
+    public String refundUserTicket(
+            @PathVariable String email,
+            @PathVariable String movieTitle,
+            @PathVariable int seatNumber) {
+        return userService.refundTicket(email, movieTitle, seatNumber);
+    }
+
 
 
     
