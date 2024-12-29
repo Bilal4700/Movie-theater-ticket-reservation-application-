@@ -2,17 +2,16 @@ import React, { useState, useEffect } from "react";
 import "../Styles/UserDashboard.css";
 
 function UserDashboard() {
-  const [user, setUser] = useState(null); // State to store user data
+  const [user, setUser] = useState(null); 
+  const [tickets, setTickets] = useState([]); 
 
   useEffect(() => {
-    // Get the logged-in user's email from localStorage
     const email = localStorage.getItem("userEmail");
     if (!email) {
       console.error("No user is logged in.");
       return;
     }
 
-    // Fetch user details from the backend using the email
     fetch(`http://localhost:8080/users/email/${email}`)
       .then((res) => {
         if (res.ok) {
@@ -21,8 +20,24 @@ function UserDashboard() {
           throw new Error("Failed to fetch user data");
         }
       })
-      .then((data) => setUser(data))
-      .catch((error) => console.error("Error fetching user:", error));
+      .then((data) => {
+        setUser(data);
+
+        return fetch(`http://localhost:8080/users/tickets/${email}`);
+      })
+      .then((res) => {
+        if (res.ok) {
+          return res.json(); 
+        } else {
+          throw new Error("Failed to fetch tickets");
+        }
+      })
+      .then((ticketData) => {
+        setTickets(ticketData); 
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
   }, []);
 
   if (!user) {
@@ -36,6 +51,16 @@ function UserDashboard() {
       </div>
       <div className="dashboard-content">
         <p><strong>Email:</strong> {user.email}</p>
+        <h3>Your Tickets:</h3>
+        {tickets.length > 0 ? (
+          <ul className="tickets-list">
+            {tickets.map((ticket, index) => (
+              <li key={index}>{ticket}</li>
+            ))}
+          </ul>
+        ) : (
+          <p>You have no tickets.</p>
+        )}
       </div>
     </div>
   );

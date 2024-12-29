@@ -1,7 +1,8 @@
 package ca.ucalgary.ensf480.Account;
 
 import java.util.List;
-
+import ca.ucalgary.ensf480.Movie.MovieRepository;
+import ca.ucalgary.ensf480.Movie.Movies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,9 +11,12 @@ public class UserService {
 
     @Autowired
     private final UserRepository userRepository;
+    private final MovieRepository movieRepository;
 
-    public UserService(UserRepository userRepository) {
+
+    public UserService(UserRepository userRepository, MovieRepository movieRepository) {
         this.userRepository = userRepository;
+        this.movieRepository = movieRepository;
     }
 
     public String registeredUsers(User user) {
@@ -50,16 +54,27 @@ public class UserService {
         return userRepository.findByEmail(email);
     }
     
-    public String updateTickets(String email,String newTicket) {
-    	User user = userRepository.findByEmail(email);
-    	String oldTickets = user.getTickets();
-    	if(oldTickets == null || oldTickets.isEmpty()) {
-    		user.setTickets(newTicket);
-    	}else {
-    		user.setTickets(oldTickets + ","+ newTicket);
-    	}
-    	userRepository.save(user);
-    	return user.getTickets();
+    public String updateTickets(String email, String newTicket, String movieTitle) {
+        Movies movie = movieRepository.findByTitle(movieTitle);
+        if (movie == null) {
+            throw new IllegalArgumentException("Movie with title '" + movieTitle + "' not found");
+        }
+        String ticketName = movie.getTitle() + " Seat number " + newTicket;
+        User user = userRepository.findByEmail(email);
+        if (user == null) {
+            throw new IllegalArgumentException("User with email '" + email + "' not found");
+        }
+
+        String oldTickets = user.getTickets();
+        if (oldTickets == null || oldTickets.isEmpty()) {
+            user.setTickets(ticketName);
+        } else {
+            user.setTickets(oldTickets + "," + ticketName);
+        }
+
+        userRepository.save(user);
+        return user.getTickets();
     }
+
 
 }

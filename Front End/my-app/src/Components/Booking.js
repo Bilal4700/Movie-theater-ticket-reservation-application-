@@ -36,10 +36,9 @@ function Booking() {
 
 	//for Seat map functinos start here
 
-	const [selectedSeats, setSelectedSeats] = useState(""); // putting values to check disable seats
+	const [selectedSeats, setSelectedSeats] = useState(""); 
 	const [isPaymentPopupVisible, setIsPaymentPopupVisible] = useState(false);
     const [selectedSeatForPayment, setSelectedSeatForPayment] = useState(null);
-	const [user, setUser] = useState(null);
 	const [ccn, setCcn] = useState(''); 
 	const [exp, setExp] = useState(''); 
 	const [cvv, setCvv] = useState(''); 
@@ -223,36 +222,67 @@ function Booking() {
 		);
 	  };
 
-	const handlePaymentSubmit = () => {
-		
+	  const handlePaymentSubmit = () => {
 		console.log(`Submitting payment for seat ${selectedSeatForPayment}`);
 	
 		const formData = new URLSearchParams();
 		formData.append("seat", selectedSeatForPayment);
 		console.log("Form Data:", formData.toString());
+	
+		// First, update the seat for the movie
 		fetch(`http://localhost:8080/Movies/${movie}/seats`, {
 			method: "PUT",
 			headers: {
-				"Content-Type": "application/x-www-form-urlencoded", 
+				"Content-Type": "application/x-www-form-urlencoded",
 			},
-			body: formData.toString(), 
+			body: formData.toString(),
 		})
 			.then((response) => {
 				if (!response.ok) {
 					throw new Error("Failed to update seat");
 				}
-				return response.text(); 
+				return response.text();
 			})
 			.then((data) => {
-				console.log(data); 
+				console.log(data);
+	
+				// After updating the seat, update the user's tickets
+				const email = localStorage.getItem("userEmail"); 
+				if (!email) {
+					console.error("User email not found in localStorage.");
+					return;
+				}
+	
+				const ticketFormData = new URLSearchParams();
+				ticketFormData.append("tickets", selectedSeatForPayment);
+	
+				return fetch(`http://localhost:8080/tickets/${email}/${movie}`, {
+					method: "PUT",
+					headers: {
+						"Content-Type": "application/x-www-form-urlencoded",
+					},
+					body: ticketFormData.toString(),
+				});
+			})
+			.then((response) => {
+				if (!response.ok) {
+					throw new Error("Failed to update user's tickets");
+				}
+				return response.text();
+			})
+			.then((ticketResponse) => {
+				console.log("Ticket Update Response:", ticketResponse);
+	
 				setSelectedSeatForPayment(null);
 				closePaymentPopup();
 				fetchSelectedSeats();
 			})
 			.catch((error) => {
-				console.error("Error submitting payment:", error);
+				console.error("Error submitting payment and updating tickets:", error);
 			});
 	};
+	
+
 	
 	
 

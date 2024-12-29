@@ -65,11 +65,29 @@ public class StoreController {
         return user;
     }
     
-    @PutMapping("/users/tickets/{email}")
-    public String updateTickets(@PathVariable String email,  String tickets) {
-        String updatedTickets = userService.updateTickets(email, tickets);
+    @PutMapping("/tickets/{email}/{movieTitle}")
+    public String updateTickets(@PathVariable String email,@PathVariable String movieTitle,@RequestParam String tickets) {
+        
+        String updatedTickets = userService.updateTickets(email, tickets, movieTitle);
         return "Updated Tickets: " + updatedTickets;
     }
+    
+    @GetMapping("/users/tickets/{email}")
+    public List<String> getUserTickets(@PathVariable String email) {
+        User user = userService.findByEmail(email);
+        if (user == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
+        }
+
+        // Get the user's tickets and split them into a list
+        String tickets = user.getTickets();
+        if (tickets == null || tickets.isEmpty()) {
+            return List.of(); // Return an empty list if no tickets
+        }
+        return List.of(tickets.split(",")); // Split tickets into a JSON array
+    }
+
+
     
 
     }
